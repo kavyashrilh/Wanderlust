@@ -10,6 +10,9 @@ module.exports.listingSchema=Joi.object({
          image: Joi.object({
             url: Joi.string().allow("", null)
         }).required()
+        //  image: Joi.object({
+        //     url: Joi.string().allow("", null)
+        // }).optional()
     }).required()
 });
 

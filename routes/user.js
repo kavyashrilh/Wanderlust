@@ -25,9 +25,23 @@ router.post("/signup",wrapAsync(async(req,res)=>{
 router.get("/login",(req,res)=>{
     res.render("users/login.ejs");
 });
-router.post("/login",passport.authenticate("local",{failureRedirect:'/login',failureFlash:true}),async(req,res)=>{
-    req.flash("success","Welcome back to Wanderlust!");
-    res.redirect("/listings");
-})
+// router.post("/login",passport.authenticate("local",{failureRedirect:'/login',failureFlash:true}),async(req,res)=>{
+//     req.flash("success","Welcome back to Wanderlust!");
+//     res.redirect("/listings");
+// })
+
+router.post("/login",
+    passport.authenticate("local", {
+        failureRedirect: "/login",
+        failureFlash: true
+    }),
+    (req, res) => {
+        req.flash("success", "Welcome back to Wanderlust!");
+
+        const redirectUrl = res.locals.returnTo || "/listings";
+        res.redirect(redirectUrl);
+    }
+);
+
 
 module.exports=router;
