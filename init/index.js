@@ -17,6 +17,27 @@
 //     console.log("data was initialized!");
 // }
 // initDB();
+// const mongoose = require("mongoose");
+// const Listing = require("../models/listing");
+// const initData = require("./data.js");
+
+// async function main() {
+//     await mongoose.connect("mongodb://127.0.0.1:27017/wander");
+// }
+
+// main()
+//     .then(async () => {
+//         console.log("Connected to DB");
+
+//         await Listing.deleteMany({});
+//          initData.data=initData.data.map((obj)=>({...obj,owner:"6ae9bb112f43a43da5de1fa0"}));
+//         await Listing.insertMany(initData.data);
+
+//         console.log("Data initialized");
+//         await mongoose.connection.close();
+//     })
+//     .catch(console.error);
+
 const mongoose = require("mongoose");
 const Listing = require("../models/listing");
 const initData = require("./data.js");
@@ -30,9 +51,20 @@ main()
         console.log("Connected to DB");
 
         await Listing.deleteMany({});
+
+        initData.data = initData.data.map((obj) => ({
+            ...obj,
+            owner: new mongoose.Types.ObjectId("6ae9bb112f43a43da5de1fa0"),
+            reviews: []
+        }));
+
         await Listing.insertMany(initData.data);
 
         console.log("Data initialized");
+
         await mongoose.connection.close();
     })
-    .catch(console.error);
+    .catch(async (err) => {
+        console.error(err);
+        await mongoose.connection.close();
+    });
