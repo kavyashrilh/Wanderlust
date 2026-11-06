@@ -1,12 +1,78 @@
 <% layout('/layouts/boilerplate') %>
 
 <body>
-    <h3>All Listings</h3>
-    
-    <!-- <form method="GET" action="/listings/new">
-        <button>Create Listing</button>
-    </form> -->
-    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+   <div id="filters">
+    <div class="category-container">
+
+        <a href="/listings?category=Trending" class="filter">
+            <i class="fa-solid fa-fire"></i>
+            <p>Trending</p>
+        </a>
+
+        <a href="/listings?category=Rooms" class="filter">
+            <i class="fa-solid fa-bed"></i>
+            <p>Rooms</p>
+        </a>
+
+        <a href="/listings?category=Iconic%20Cities" class="filter">
+            <i class="fa-solid fa-city"></i>
+            <p>Iconic Cities</p>
+        </a>
+
+        <a href="/listings?category=Mountains" class="filter">
+            <i class="fa-solid fa-mountain"></i>
+            <p>Mountains</p>
+        </a>
+
+        <a href="/listings?category=Castles" class="filter">
+            <i class="fa-solid fa-chess-rook"></i>
+            <p>Castles</p>
+        </a>
+
+        <a href="/listings?category=Amazing%20Pools" class="filter">
+            <i class="fa-solid fa-person-swimming"></i>
+            <p>Amazing Pools</p>
+        </a>
+
+        <a href="/listings?category=Camping" class="filter">
+            <i class="fa-solid fa-campground"></i>
+            <p>Camping</p>
+        </a>
+
+        <a href="/listings?category=Farms" class="filter">
+            <i class="fa-solid fa-wheat-awn"></i>
+            <p>Farms</p>
+        </a>
+
+        <a href="/listings?category=Arctic" class="filter">
+            <i class="fa-regular fa-snowflake"></i>
+            <p>Arctic</p>
+        </a>
+        <a href="/listings?category=Dome" class="filter">
+            <i class="fa-solid fa-landmark-dome"></i>
+            <p>Domes</p>
+        </a>
+        <a href="/listings?category=Arctic" class="filter">
+            <i class="fa-solid fa-sailboat"></i>
+            <p>Boats</p>
+        </a>
+
+    </div>
+<div class="tax-toggle form-check form-switch">
+    <input
+        class="form-check-input"
+        type="checkbox"
+        role="switch"
+        id="taxToggle"
+    >
+    <label class="form-check-label" for="taxToggle">
+        Display total before taxes
+    </label>
+</div>
+</div>
+<div class="container">
+    <!-- <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3"> -->
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-1">
         <%for(listing of allListings){%>
             <a href="/listings/<%=listing._id%>" class="listing-link">
                  <div class="card col listing-card">
@@ -25,13 +91,27 @@
     <p class="card-text"><b><%=listing.title%></b>
     <br>
         &#8377; <%=listing.price.toLocaleString("en-IN")%>/night
+        <i class="tax-info"> &nbsp; &nbsp; +18% GST</i>
 </p>
   </div>
 </div>
+  </a>
 <%}%>
     </div>
-            </a>
-   
- 
-   
+    
+   <script>
+    let taxSwitch = document.getElementById("taxToggle");
+
+    taxSwitch.addEventListener("change", () => {
+        let taxInfo = document.getElementsByClassName("tax-info");
+
+        for (let info of taxInfo) {
+            if (taxSwitch.checked) {
+                info.style.display = "inline";
+            } else {
+                info.style.display = "none";
+            }
+        }
+    });
+</script>
 </body>

@@ -25,12 +25,10 @@ const ListingSchema=new Schema({
     image: {
         filename: {
             type: String,
-            default: "listingimage",
         },
 
         url: {
             type: String,
-            default: "https://images.unsplash.com/photo-1547699224-0924faf995c6",
         },
     },
     price:Number,
@@ -46,14 +44,35 @@ const ListingSchema=new Schema({
         type:Schema.Types.ObjectId,
         ref:"User",
     },
+    geometry: {
+    type: {
+        type: String,
+        enum: ["Point"],
+        required: true
+    },
+    coordinates: {
+        type: [Number],
+        required: true
+    }
+},
+category: {
+    type: String,
+    enum: [
+        "Trending",
+        "Rooms",
+        "Iconic Cities",
+        "Mountains",
+        "Castles",
+        "Amazing Pools",
+        "Camping",
+        "Farms",
+        "Arctic"
+    ],
+    required: true
+}
 });
 
-// listingSchema.post("findOneAndDelete",async(req,res)=>{
-//     if(listing){
-//          await Review.deleteMany({_id:{$in:listing.reviews}})
-//     }
-   
-// })
+
 ListingSchema.post("findOneAndDelete", async (listing) => {
     if (listing) {
         await Review.deleteMany({
